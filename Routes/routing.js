@@ -1,16 +1,16 @@
 const express = require('express');
 
 const routing = express.Router();
-const lastloginapi = require('../Controller/lastlogin');
+const headerapi = require('../Controller/HeaderApi');
 
-// routing.get('/notes', lastloginapi.getNotes);
+// routing.get('/notes', headerapi.getNotes);
 
-routing.get('/lastlogintime', lastloginapi.lastlogintime);
+routing.get('/lastlogintime', headerapi.lastlogintime);
 
-routing.get('/getDropDownItem', lastloginapi.getDropDownItem);
+routing.get('/getDropDownItem', headerapi.getDropDownItem);
 
-// routing.post('/notes', lastloginapi.newNotes);
+// routing.post('/notes', headerapi.newNotes);
 
-routing.all('*', lastloginapi.invalid);
+routing.all('*', headerapi.invalid);
 
 module.exports = routing;
