@@ -17,12 +17,18 @@ const fm2 = new mongoose.Schema(
         // },
         lastlogin: {
             type: Number
-        }
+        },
+        category: {
+            type: String
+        },
+        name: {
+            type: String
+        },
     },
 
 );
 
-const fm2model = mongoose.model("fm", fm2);
+const fm2model = mongoose.model("fms", fm2, 'fm');
 
 
 // exports.getNotes = async (req, res) => {
@@ -45,13 +51,53 @@ exports.lastlogintime = async (req, res) => {
 
         const noteObj = [
             {
-                lastlogin: newDate
-            }
+                lastlogin: newDate,
+                category: 'Undefined',
+                name: 'Undefined'
+            },
+            {
+                category: 'mmt',
+                name: 'mmt'
+            },
+            {
+                category: 'hpcl',
+                name: 'hpcl'
+            },
+            {
+                category: 'platinum',
+                name: 'platinum'
+            },
+            {
+                category: 'groww',
+                name: 'groww'
+            },
+            {
+                category: 'kite',
+                name: 'kite'
+            },
+            {
+                category: '12%club',
+                name: '12%club'
+            },
+            {
+                category: 'accounts',
+                name: 'icici'
+            },
+            {
+                category: 'accounts',
+                name: 'sbi'
+            },
+            {
+                category: 'accounts',
+                name: 'paytm'
+            },
+
         ];
         // const newNotes = await fm2model.create(noteObj);
-        const getdate = await fm2model.find({}, { _id: 0, __v: 0 });
+        const getdate = await fm2model.find({ category: 'Undefined' }, { _id: 0, __v: 0 });
         // console.log(notes[0].lastlogin)
         const date = new Date(getdate[0].lastlogin)
+
 
         const updatedate = await fm2model.findOneAndUpdate({ lastlogin: date },
             { lastlogin: new Date() },
@@ -79,7 +125,7 @@ exports.getDropDownItem = async (req, res) => {
     try {
         res.status(200).json({
             status: 'success',
-            message: ['MMT', 'HPCL', 'PLATINUM'],
+            message: ['MMT', 'HPCL', 'PLATINUM', 'GROWW', 'Kite', '12% Club', 'Accounts'],
         });
     } catch (err) {
         res.status(404).json({
@@ -89,18 +135,25 @@ exports.getDropDownItem = async (req, res) => {
     }
 };
 
-// exports.newNotes = async (req, res) => {
-//     try {
-//         res.status(201).json({
-//             data: 'New notes added for the POST request',
-//         });
-//     } catch (err) {
-//         res.status(404).json({
-//             status: 'fail',
-//             message: err.errmsg,
-//         });
-//     }
-// };
+exports.countItem = async (req, res) => {
+    console.log('line 138')
+    try {
+        console.log(req.body)
+
+        const countItem = await fm2model.find({ category: req.body.value }, { _id: 0, __v: 0 })
+        console.log(countItem);
+        res.status(200).json({
+            status: 'success',
+            count: countItem
+        });
+    } catch (err) {
+        res.status(404).json({
+            status: 'fail',
+            message: err,
+        });
+    }
+};
+
 
 exports.invalid = async (req, res) => {
     console.log('function called')
