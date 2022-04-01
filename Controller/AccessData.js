@@ -10,7 +10,13 @@ const fm2 = new mongoose.Schema(
         platform: {
             type: String
         },
-        comment: {
+        name: {
+            type: String
+        },
+        quantity: {
+            type: Number
+        },
+        price: {
             type: String
         },
         amount: {
@@ -19,6 +25,9 @@ const fm2 = new mongoose.Schema(
         creditdebit: {
             type: String
         },
+        comment: {
+            type: String
+        }
     },
 
 );
@@ -32,34 +41,66 @@ exports.getData = async (req, res) => {
         const noteObj = [
             {
                 date: new Date(),
-                platform: 'GROWW',
-                name: 'Undefined',
-                amount: 500,
-                creditdebit: 'debit'
+                platform: 'MMT',
+                name: 'Coal India',
+                quantity: 10,
+                price: 200,
+                amount: 2000,
+                creditdebit: 'credit',
+                comment: 'bought for experiment'
             },
             {
                 date: new Date(),
-                platform: 'GROWW',
-                name: 'Undefined',
-                amount: 500,
-                creditdebit: 'debit'
-            }, {
+                platform: 'HPCL',
+                name: 'Coal India',
+                quantity: 10,
+                price: 200,
+                amount: 2000,
+                creditdebit: 'credit',
+                comment: 'bought for experiment'
+            },
+            {
                 date: new Date(),
-                platform: 'GROWW',
-                name: 'Undefined',
-                amount: 500,
-                creditdebit: 'debit'
-            }, {
+                platform: 'PLATINUM',
+                name: 'Coal India',
+                quantity: 10,
+                price: 200,
+                amount: 2000,
+                creditdebit: 'credit',
+                comment: 'bought for experiment'
+            },
+            {
                 date: new Date(),
-                platform: 'GROWW',
-                name: 'Undefined',
-                amount: 500,
-                creditdebit: 'debit'
+                platform: 'Kite',
+                name: 'Coal India',
+                quantity: 10,
+                price: 200,
+                amount: 2000,
+                creditdebit: 'credit',
+                comment: 'bought for experiment'
+            },
+            {
+                date: new Date(),
+                platform: '12% Club',
+                name: 'Coal India',
+                quantity: 10,
+                price: 200,
+                amount: 2000,
+                creditdebit: 'credit',
+                comment: 'bought for experiment'
             },
 
         ];
         // const newNotes = await fm2model.create(noteObj);
-        const resdata = await fm2model.find({ platform: req.body.value }, { _id: 0, __v: 0 });
+        const resdata = await fm2model.find(
+            {
+                platform: req.body.value,
+                $and: [
+                    { date: { $gte: req.body.startDate } },
+                    { date: { $lte: req.body.endDate } },
+                ]
+            },
+            { _id: 0, __v: 0 });
         console.log(req.body)
         res.status(200).json({
             status: 'success',
