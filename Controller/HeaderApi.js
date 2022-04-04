@@ -156,7 +156,7 @@ exports.countItem = async (req, res) => {
 
 
 exports.invalid = async (req, res) => {
-    console.log('function called')
+    // console.log('function called')
     res.status(200).json({
         status: 'fail',
         message: 'Invalid path',

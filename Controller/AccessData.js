@@ -35,6 +35,22 @@ const fm2 = new mongoose.Schema(
 const fm2model = mongoose.model("fmdata", fm2, 'fmdata');
 
 
+exports.insertData = async (req, res) => {
+    console.log('insertData - ', req.body.value)
+    try {
+        const resdata = await fm2model.insertMany(req.body.value);
+        res.status(200).json({
+            status: 'success',
+            message: resdata
+        });
+    } catch (err) {
+        res.status(404).json({
+            status: 'fail',
+            message: err,
+        });
+    }
+};
+
 
 exports.getData = async (req, res) => {
     try {
@@ -92,6 +108,7 @@ exports.getData = async (req, res) => {
 
         ];
         // const newNotes = await fm2model.create(noteObj);
+        console.log('-----------------', new Date(req.body.startDate), new Date(req.body.endDate))
         const resdata = await fm2model.find(
             {
                 platform: req.body.value,
@@ -102,6 +119,7 @@ exports.getData = async (req, res) => {
             },
             { _id: 0, __v: 0 });
         console.log(req.body)
+        resdata.reverse();
         res.status(200).json({
             status: 'success',
             message: resdata
@@ -113,3 +131,33 @@ exports.getData = async (req, res) => {
         });
     }
 };
+
+
+exports.getHighLevelViewData = async (req, res) => {
+    try {
+        // console.log('-----------------', new Date(req.body.startDate), new Date(req.body.endDate))
+        const resdata = await fm2model.find(
+            {
+                $and: [
+                    { date: { $gte: req.body.startDate } },
+                    { date: { $lte: req.body.endDate } },
+                ]
+            },
+            { _id: 0, __v: 0 });
+        // const resdata = await fm2model.find()
+        // console.log(req.body)
+        // console.log('resdata is ', resdata)
+        resdata.reverse();
+        res.status(200).json({
+            status: 'success',
+            message: resdata
+        });
+    } catch (err) {
+        res.status(404).json({
+            status: 'fail',
+            message: err,
+        });
+    }
+};
+
+
