@@ -18,6 +18,10 @@ routing.post('/getHighLevelViewData', accessDataapi.getHighLevelViewData);
 
 routing.post('/countItem', headerapi.countItem);
 
+routing.post('/getDocsData', accessDataapi.getDocsData)
+
+routing.post('/updateDocsData', accessDataapi.updateDocsData)
+
 // routing.post('/notes', headerapi.newNotes);
 
 routing.all('*', headerapi.invalid);
