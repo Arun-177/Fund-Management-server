@@ -125,7 +125,7 @@ exports.getDropDownItem = async (req, res) => {
     try {
         res.status(200).json({
             status: 'success',
-            message: ['MMT', 'HPCL', 'PLATINUM', 'GROWW', 'Kite', '12% Club', 'Accounts'],
+            message: ['mmt', 'hpcl', 'platinum', 'groww', 'kite', '12% club', 'accounts'],
         });
     } catch (err) {
         res.status(404).json({
@@ -156,7 +156,7 @@ exports.countItem = async (req, res) => {
 
 
 exports.invalid = async (req, res) => {
-    console.log('function called')
+    // console.log('function called')
     res.status(200).json({
         status: 'fail',
         message: 'Invalid path',
